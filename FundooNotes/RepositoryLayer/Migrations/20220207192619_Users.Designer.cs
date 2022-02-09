@@ -9,8 +9,8 @@ using RepositoryLayer.Services;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(FundooDbContext))]
-    [Migration("20220204205216_UserTable")]
-    partial class UserTable
+    [Migration("20220207192619_Users")]
+    partial class Users
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,8 +27,8 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("mobileNo")
-                        .HasColumnType("int");
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -38,8 +38,9 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("mobileNo")
-                        .IsUnique();
+                    b.HasIndex("email")
+                        .IsUnique()
+                        .HasFilter("[email] IS NOT NULL");
 
                     b.ToTable("Users");
                 });

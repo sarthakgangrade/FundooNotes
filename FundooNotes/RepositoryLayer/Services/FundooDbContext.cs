@@ -18,7 +18,7 @@ namespace RepositoryLayer.Services
             OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-            .HasIndex(u => u.mobileNo)
+            .HasIndex(u => u.email)
             .IsUnique();
         }
     }

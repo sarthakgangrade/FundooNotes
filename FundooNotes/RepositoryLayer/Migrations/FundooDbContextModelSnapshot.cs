@@ -25,8 +25,8 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("mobileNo")
-                        .HasColumnType("int");
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -36,8 +36,9 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("mobileNo")
-                        .IsUnique();
+                    b.HasIndex("email")
+                        .IsUnique()
+                        .HasFilter("[email] IS NOT NULL");
 
                     b.ToTable("Users");
                 });

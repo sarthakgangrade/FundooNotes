@@ -13,7 +13,7 @@ namespace CommonLayer.User
         [Required]
         public int id { get; set; }
         public string name { get; set; }
-        public int mobileNo { get; set; }
+        public string email { get; set; }
         public string password { get; set; }
         
     }
