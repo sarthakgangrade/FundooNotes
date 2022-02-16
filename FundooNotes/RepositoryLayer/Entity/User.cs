@@ -11,10 +11,11 @@ namespace CommonLayer.User
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int id { get; set; }
+        public int userId { get; set; }
         public string name { get; set; }
         public string email { get; set; }
         public string password { get; set; }
-        
+        //public ICollection<Note.Note> Notes { get; set; }
+
     }
 }

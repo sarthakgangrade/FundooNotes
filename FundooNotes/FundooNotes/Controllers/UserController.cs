@@ -11,7 +11,7 @@ using System.Security.Claims;
 namespace FundooNotes.Controllers
 {
     [ApiController]
-    [Route("Controller")]
+    [Route("Users")]
 
     public class UserController : ControllerBase
     {
@@ -65,7 +65,8 @@ namespace FundooNotes.Controllers
             }
         }
 
-        [HttpPut("ForgotPassword")]
+        
+        [HttpPut("ForgotPassword/{email}")]
         public ActionResult ForgetPassword(string email)
         {
             try
@@ -79,9 +80,9 @@ namespace FundooNotes.Controllers
             }
         }
 
-        [AllowAnonymous]
-        [HttpPut("resetpassword")]
-        public ActionResult ResetPassword(string email, string password)
+        [Authorize]
+        [HttpPut("resetpassword/{password}")]
+        public ActionResult ResetPassword(string password)
         {
             try
             {
@@ -91,7 +92,7 @@ namespace FundooNotes.Controllers
                 {
                     IEnumerable<Claim> claims = identity.Claims;
                     var UserEmailObject = claims.Where(p => p.Type == @"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").FirstOrDefault()?.Value;
-                    this.userBL.ResetPassword(email, password);
+                    this.userBL.ResetPassword(UserEmailObject,password);
                     return Ok(new { success = true, message = "Password Changed Sucessfully", email = $"{UserEmailObject}" });
                 }
                 return this.BadRequest(new { success = false, message = $"Password changed unSuccessfully" });
@@ -101,7 +102,8 @@ namespace FundooNotes.Controllers
                 throw e;
             }
         }
-        
+
+        [Authorize]
         [HttpGet("getallusers")]
         public ActionResult GetAllUsers()
         {

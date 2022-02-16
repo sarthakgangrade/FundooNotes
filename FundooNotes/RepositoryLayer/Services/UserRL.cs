@@ -29,7 +29,7 @@ namespace RepositoryLayer.Class
             try
             {
                 User user = new User();
-                user.id = new User().id;
+                user.userId = new User().userId;
                 user.name = userPostModel.name;
                 user.email = userPostModel.email; ;
                 user.password = userPostModel.password;
@@ -53,7 +53,7 @@ namespace RepositoryLayer.Class
                 User user = new User();
                 var result = dbContext.Users.Where(x => x.email == userLogin.email && x.password == userLogin.password).FirstOrDefault();
                 if (result != null)
-                    return GenerateJWTToken(userLogin.email , user.id);
+                    return GenerateJWTToken(userLogin.email , user.userId);
                 else
                     return null;
             }
@@ -130,7 +130,7 @@ namespace RepositoryLayer.Class
 
                     Message MyMessage = new Message();
                     MyMessage.Formatter = new BinaryMessageFormatter();
-                    MyMessage.Body = GenerateJWTToken(email, checkemail.id);
+                    MyMessage.Body = GenerateJWTToken(email, checkemail.userId);
                     MyMessage.Label = "Forget Password Email";
                     queue.Send(MyMessage);
                     Message msg = queue.Receive();
@@ -188,41 +188,7 @@ namespace RepositoryLayer.Class
                 throw e;
             }
         }
-        /*public string EncryptPassword(string password)
-        {
-            try
-            {
-                byte[] encode = new byte[password.Length];
-
-                encode = Encoding.UTF8.GetBytes(password);
-                //byte encPassword = Convert.FromBase64String(encode);
-                string encPassword = Convert.ToBase64String(encode);
-                return encPassword;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public string DecryptPassword(string encryptpwd)
-        {
-            try
-            {
-                UTF8Encoding encodepwd = new UTF8Encoding();
-                Decoder Decode = encodepwd.GetDecoder();
-                byte[] todecode_byte = Convert.FromBase64String(encryptpwd);
-                int charCount = Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
-                char[] decoded_char = new char[charCount];
-                Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
-                string decryptpwd = new String(decoded_char);
-                return decryptpwd;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }*/
+        
         
         private void msmqQueue_ReceiveCompleted(object sender, ReceiveCompletedEventArgs e)
         {
