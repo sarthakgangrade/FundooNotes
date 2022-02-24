@@ -1,7 +1,9 @@
 ﻿using CommonLayer.User;
 using Crypteron.Internal.ThirdParty.Avro;
 using Experimental.System.Messaging;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 using RepositoryLayer.Services;
 using System;
@@ -33,6 +35,10 @@ namespace RepositoryLayer.Class
                 user.name = userPostModel.name;
                 user.email = userPostModel.email; ;
                 user.password = userPostModel.password;
+                
+                user.cpassword= userPostModel.cpassword;
+                user.address = userPostModel.address;
+                user.mobilNo = userPostModel.mobilNo;
 
                 user.password = StringCipher.Encrypt(userPostModel.password);
 
@@ -52,8 +58,9 @@ namespace RepositoryLayer.Class
             {
                 User user = new User();
                 var result = dbContext.Users.Where(x => x.email == userLogin.email && x.password == userLogin.password).FirstOrDefault();
+                int Id = result.userId;
                 if (result != null)
-                    return GenerateJWTToken(userLogin.email , user.userId);
+                    return GenerateJWTToken(userLogin.email , Id);
                 else
                     return null;
             }
@@ -179,8 +186,11 @@ namespace RepositoryLayer.Class
         {
             try
             {
-                var result = dbContext.Users.ToList();
-                
+                var result = dbContext.Users
+                    .Include(u => u.UserAddress)
+                    .Include(u => u.Note)
+                    .Include(u => u.Label).ToList();
+
                 return result;
             }
             catch (Exception e)

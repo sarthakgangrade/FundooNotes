@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
+using RepositoryLayer.Entity;
 using RepositoryLayer.Services;
 using System;
 using System.Collections.Generic;
@@ -105,7 +106,7 @@ namespace FundooNotes.Controllers
         }
 
         [Authorize]
-        [HttpDelete("deleteNotes/{noteID}")]
+        [HttpDelete("deleteNote/{noteID}")]
         public IActionResult DeleteNote(int noteID)
         {
             try

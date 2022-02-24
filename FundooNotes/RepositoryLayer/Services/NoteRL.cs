@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RepositoryLayer.Entity;
 
 namespace RepositoryLayer.Services
 {
@@ -28,6 +29,7 @@ namespace RepositoryLayer.Services
                 var user = dbContext.Users.FirstOrDefault(x => x.userId == userId);
                 Note note = new Note();
                 note.NotesId = new Note().NotesId;
+                note.userId = userId;
                 note.Title = notePostModel.Title;
                 note.Description = notePostModel.Description;
                 note.color = notePostModel.color;

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace CommonLayer.Note
+namespace RepositoryLayer.Entity
 {
     public class Note
     {
@@ -11,7 +12,7 @@ namespace CommonLayer.Note
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public int NotesId { get; set; }
-        public int userId { get; set; }
+        
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsReminder { get; set; }
@@ -21,6 +22,11 @@ namespace CommonLayer.Note
         public bool IsTrash { get; set; }
         public bool IsArchive { get; set; }
         public bool IsPin { get; set; }
-        //public virtual User.User user { get; set; }
+        //public virtual ICollection<Label> Label { get; set; }
+        //public virtual IList<Label> Label { get; set; }
+        public virtual User User { get; set; }
+        [ForeignKey("User")]
+        public int? userId { get; set; }
+
     }
 }

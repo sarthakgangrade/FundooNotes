@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Note;
+using RepositoryLayer.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;

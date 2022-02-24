@@ -20,11 +20,7 @@ namespace CommonLayer.Note
         [Required]
         public string color { get; set; }
 
-        public bool IsTrash { get; set; }
-
-        public bool IsArchive { get; set; }
-        [Required]
-        public bool IsPin { get; set; }
+        
 
     }
 }

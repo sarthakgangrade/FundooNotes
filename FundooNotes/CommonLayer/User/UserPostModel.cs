@@ -14,6 +14,8 @@ namespace CommonLayer.User
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
         ErrorMessage = "Please enter Strong Password")]
         public string password { get; set; }
-        
+        public string cpassword { get; set; }
+        public string address { get; set; }
+        public long mobilNo { get; set; }
     }
 }
